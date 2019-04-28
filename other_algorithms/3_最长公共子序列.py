@@ -37,14 +37,16 @@ def lcs(str_1, str_2):
     m = len(str_1)
     n = len(str_2)
     # 初始化一个行数为(m+1)，列数为(n+1)的零矩阵，记得要用下面方式创建，[[0] * n]*m得到的矩阵有问题，每次赋值是对整列元素赋值
-    matrix = [[0 for j in range(n + 1)] for i in range(m + 1)]
-    flag = [[0 for j in range(n + 1)] for i in range(m + 1)]  # flag矩阵用来标记当前元素是否属于最大公共序列
+    # 我们增加了最上面添加了一行。最左边添加了一列的目的是因为我们代码运行时，matrix[i+1][j+1]与matrix[i+1][j]或matrix[i][j+1]有关，
+    # 如果直接m行n列，那么第0行的元素或者第0列的元素，都没办法计算
+    matrix = [[0 for _ in range(n + 1)] for _ in range(m + 1)]
+    flag = [[0 for _ in range(n + 1)] for _ in range(m + 1)]  # flag矩阵用来标记当前元素是否属于最大公共序列
     for i in range(m):
         for j in range(n):
             if str_1[i] == str_2[j]:
                 matrix[i + 1][j + 1] = matrix[i][j] + 1
                 flag[i + 1][j + 1] = 'ok'
-            elif matrix[i + 1][j] > matrix[i + 1][j + 1]:
+            elif matrix[i + 1][j] > matrix[i][j + 1]:
                 matrix[i + 1][j + 1] = matrix[i + 1][j]
                 flag[i + 1][j + 1] = 'left'
             else:
@@ -75,7 +77,6 @@ def get_series(string, flag):
 if __name__ == '__main__':
     s1 = input()
     s2 = input()
-    mat, flag = lcs(s1, s2)
+    mat, flags = lcs(s1, s2)
     print(mat[-1][-1])
-    print(flag)
-    print(get_series(s1, flag))
+    print("".join(get_series(s1, flags)[::-1]))

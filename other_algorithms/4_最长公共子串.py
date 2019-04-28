@@ -40,7 +40,39 @@ def brute_force_match(str_1, str_2):
     return -1
 
 
+"""
+ 2.第二个思路，最长公共子串可以看成是最长公共序列算法的简易版本，我们同样可以建立一个二维矩阵，
+   
+   如果某一行和某一列对应的字符相同，就把矩阵中对应的元素设为 其左上角的元素值 + 1
+   那么最终我们会得到一个二维矩阵，值最大的那个元素所对应的左上角连线，就是我们所求的LCS
+   
+   同时设置一个变量max_value记录矩阵当前最大的元素，以及对应的位置i,j，用于我们后面输出最大的字符串，
+   如何只需要返回最大值，我们直接返回max_value
+"""
+
+
+def lcs(str_1, str_2):
+    m = len(str_1)
+    n = len(str_2)
+    max_value = 0
+    max_i = 0  # 最大值对应的值
+    matrix = [[0 for _ in range(n + 1)] for _ in range(m + 1)]  # 创建一个m*n的零矩阵
+    for i in range(m):
+        for j in range(n):
+            if str_1[i] == str_2[j]:
+                matrix[i + 1][j + 1] = matrix[i][j] + 1
+                if matrix[i + 1][j + 1] > max_value:
+                    max_value = matrix[i + 1][j + 1]
+                    max_i = i
+    common_string = []
+    for i in range(max_value, 0, -1):
+        common_string.append(string_1[max_i])
+        max_i -= 1
+    return ''.join(common_string[::-1])
+
+
 if __name__ == '__main__':
     string_1 = input()
     string_2 = input()
     print(brute_force_match(string_1, string_2))
+    print(lcs(string_1, string_2))

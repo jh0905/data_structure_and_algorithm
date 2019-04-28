@@ -13,20 +13,20 @@ class Solution:
     # 这里要特别注意~找到任意重复的一个值并赋值到duplication[0]
     # 函数返回True/False
     # 解法一：哈希表的做法 时间复杂度0(n)，空间复杂度0(n)
-    # def duplicate(self, numbers, duplication):
-    #     if numbers is None:
-    #         return False
-    #     for i in range(len(numbers)):
-    #         if numbers[i] < 0 or numbers[i] > len(numbers) - 1:
-    #             return False
-    #     num_dict = {}
-    #     for number in numbers:
-    #         if number in num_dict.keys():
-    #             duplication[0] = number
-    #             return True
-    #         else:
-    #             num_dict[number] = 1
-    #     return False
+    def duplicate_1(self, numbers, duplication):
+        if numbers is None:
+            return False
+        for i in range(len(numbers)):
+            if numbers[i] < 0 or numbers[i] > len(numbers) - 1:
+                return False
+        num_dict = {}
+        for number in numbers:
+            if number in num_dict.keys():
+                duplication[0] = number
+                return True
+            else:
+                num_dict[number] = 1
+        return False
 
     # 解法二： 时间复杂度0(n)，空间复杂度0(1)
     #   一维列表长度为n,且所有元素在0到n-1之间，如果这个数组中没有重复的数字，那么数组排序之后，数字i必定会出现在下标为i的位置，所以遍历
@@ -41,7 +41,7 @@ class Solution:
     #           否则:
     #               swap当前元素与当前元素[当前元素[i]]
     #  返回False
-    def duplicate(self, numbers, duplication):
+    def duplicate_2(self, numbers, duplication):
         if numbers is None:
             return False
         # 题目要求输入的数组在[0,n-1]区间内
@@ -62,6 +62,7 @@ class Solution:
 
 if __name__ == '__main__':
     sol = Solution()
-    test_numbers = [4, 3, 0, 2, 5, 6]
+    test_numbers = [4, 3, 0, 2, 4, 2, 5, 6]
     dumplication = [0] * len(test_numbers)
-    print(sol.duplicate(test_numbers, dumplication))
+    print(sol.duplicate_1(test_numbers, dumplication))
+    print(sol.duplicate_2(test_numbers, dumplication))
