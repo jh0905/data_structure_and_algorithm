@@ -76,9 +76,9 @@ def shell_sort(nums):
     while gap >= 1:
         for j in range(gap, length):
             i = j
-            while (i - gap) >= 0:
+            while i - gap >= 0:
                 if nums[i] < nums[i - gap]:
-                    nums[i], nums[i - gap] = nums[i - gap], nums[i]
+                    nums[i], nums[i - gap] = nums[i - gap], nums[i]  # python特有的交换两元素值的方式，不需要temp
                     i -= gap
                 else:
                     break
