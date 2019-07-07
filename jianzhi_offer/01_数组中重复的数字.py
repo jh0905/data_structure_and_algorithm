@@ -12,7 +12,7 @@
 class Solution:
     # 这里要特别注意~找到任意重复的一个值并赋值到duplication[0]
     # 函数返回True/False
-    # 解法一：哈希表的做法 时间复杂度0(n)，空间复杂度0(n)
+    # 解法一：哈希表的做法 时间复杂度O(n)，空间复杂度O(n)
     def duplicate_1(self, numbers, duplication):
         if numbers is None:
             return False
@@ -54,15 +54,14 @@ class Solution:
                     duplication[0] = numbers[i]
                     return True
                 # swap numbers[i] 和numbers[numbers[i]]
-                temp = numbers[i]
-                numbers[i] = numbers[numbers[i]]
-                numbers[temp] = temp
+                temp = numbers[i]  # 这里必须用temp代替索引
+                numbers[i], numbers[temp] = numbers[temp], numbers[i]
         return False
 
 
 if __name__ == '__main__':
     sol = Solution()
-    test_numbers = [4, 3, 0, 2, 4, 2, 5, 6]
+    test_numbers = [4, 3, 0, 2, 7, 2, 5, 6]
     dumplication = [0] * len(test_numbers)
     print(sol.duplicate_1(test_numbers, dumplication))
     print(sol.duplicate_2(test_numbers, dumplication))
