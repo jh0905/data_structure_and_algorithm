@@ -41,27 +41,28 @@ class Solution:
     #           否则:
     #               swap当前元素与当前元素[当前元素[i]]
     #  返回False
-    def duplicate_2(self, numbers, duplication):
+    def duplicate_2(self, numbers):
         if numbers is None:
-            return False
+            return -1
         # 题目要求输入的数组在[0,n-1]区间内
         for i in range(len(numbers)):
             if numbers[i] < 0 or numbers[i] > len(numbers) - 1:
-                return False
+                return -1
+        # 时间复杂度为O(n)
         for i in range(len(numbers)):
-            while numbers[i] != i:
-                if numbers[i] == numbers[numbers[i]]:
-                    duplication[0] = numbers[i]
-                    return True
-                # swap numbers[i] 和numbers[numbers[i]]
-                temp = numbers[i]  # 这里必须用temp代替索引
-                numbers[i], numbers[temp] = numbers[temp], numbers[i]
-        return False
+            # 当前索引与它对应的元素不等，并且以该元素作为索引指向的值也不等于该元素时，则交换两个元素
+            while i != numbers[i] and numbers[i] != numbers[numbers[i]]:
+                temp = numbers[i]
+                numbers[i] = numbers[numbers[i]]
+                numbers[temp] = temp  # 这里交换的时候，得小心点
+            # 当前索引与它对应的元素不等，并且以该元素作为索引指向的值等于该元素时，则发现重复元素
+            if i != numbers[i] and numbers[numbers[i]] == numbers[i]:
+                return numbers[i]
+        return -1
 
 
 if __name__ == '__main__':
     sol = Solution()
-    test_numbers = [4, 3, 0, 2, 7, 2, 5, 6]
-    dumplication = [0] * len(test_numbers)
-    print(sol.duplicate_1(test_numbers, dumplication))
-    print(sol.duplicate_2(test_numbers, dumplication))
+    test_numbers = [2, 3, 5, 4, 3, 2, 6, 7]
+    # print(sol.duplicate_1(test_numbers, dumplication))
+    print(sol.duplicate_2(test_numbers))

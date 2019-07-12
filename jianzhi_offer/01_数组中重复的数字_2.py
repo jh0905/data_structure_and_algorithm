@@ -20,34 +20,25 @@
 
 class Solution:
     def find_duplicate(self, numbers):
-        length = len(numbers)
-        # 二分查找区间是 1~length-1，注意查找区间不是下标区间!
-        start = 1
-        end = length - 1
-        while start <= end:
-            mid = (end - start) // 2 + start
-            count = self.count_range(numbers, length, start, mid)
-            print('count:', count)
-            if start == end:
-                if count > 1:
-                    return start
-                else:
-                    break
-            # 如果在start~mid区间的数字个数，大于mid-start+1，说明重复值在这个区间
-            if count > mid - start + 1:
-                end = mid
+        l = 1
+        r = len(numbers) - 1
+        while l < r:
+            mid = (l + r) // 2
+            if self.check(numbers, l, mid):
+                r = mid
             else:
-                start = mid + 1
-        return -1
+                l = mid + 1
+        return l
 
-    def count_range(self, numbers, length, start, end):
-        if numbers is None:
-            return 0
+    def check(self, numbers, l, mid):
         count = 0
-        for i in range(length):
-            if start <= numbers[i] <= end:
+        for i in range(len(numbers)):
+            if l <= numbers[i] <= mid:
                 count += 1
-        return count
+        if count > mid - l + 1:
+            return 1
+        else:
+            return 0
 
 
 if __name__ == '__main__':

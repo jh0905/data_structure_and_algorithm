@@ -19,14 +19,14 @@ def check(e):
     return 1
 
 
-l = min(h)
-r = max(h) + 1
+# log N的时间复杂度很低，我们直接设置搜索区间为[0,10010]
+l = 0
+r = 10010
 while l < r:
     mid = (l + r) // 2
-    # 如果mid不成立，那么说明答案在右区间
-    if not check(mid):
-        l = mid + 1
-    else:
+    # 如果mid成立，那么说明答案在左区间，用模板1（见下文）
+    if check(mid):
         r = mid
-        res = mid
-print(res)
+    else:
+        l = mid + 1
+print(l)
