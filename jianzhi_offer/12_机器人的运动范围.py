@@ -11,46 +11,47 @@
 
 
 class Solution:
-    # 机器人每次能够只能往四个方向进行移动，一开始脑子抽了，直接用遍历来做
+    def get_num(self, x):
+        num = 0
+        while x:
+            num += x % 10
+            x = x // 10
+        return num
 
-    # 算法思路：
-    #   首先需要思考我们要定义的几个函数
-    #       1.get_num_sum(num)函数，返回某个数的各位元素相加之和
-    #       2.check(rows,cols,row,col,threshold,mark_matrix)函数，检查指定的(row,col)元素是否越界，是否小于阈值，是否未被访问过
-    #       3.movingCountCore(rows,cols,row,col,threshold,mark_matrix)函数，初始化当前count为0，如果check成功，向四个方向移动
-    #           这里用到了一个递归的思想.
-    def movingCount(self, threshold, rows, cols):
-        if threshold < 0 or rows < 0 or cols < 0:
-            return 0
-        mark_matrix = [0] * rows * cols
-        count = self.movingCountCore(threshold, rows, cols, 0, 0, mark_matrix)
-        return count
-
-    def movingCountCore(self, threshold, rows, cols, row, col, mark_matrix):
-        count = 0
-        if self.check(threshold, rows, cols, row, col, mark_matrix):
-            mark_matrix[row * cols + col] = 1
-            count = 1 + self.movingCountCore(threshold, rows, cols, row + 1, col, mark_matrix) + \
-                    self.movingCountCore(threshold, rows, cols, row - 1, col, mark_matrix) + \
-                    self.movingCountCore(threshold, rows, cols, row, col + 1, mark_matrix) + \
-                    self.movingCountCore(threshold, rows, cols, row, col - 1, mark_matrix)
-        return count
-
-    def check(self, threshold, rows, cols, row, col, mark_matrix):
-        if 0 <= row < rows and 0 <= col < cols and self.get_num_sum(
-                row) + self.get_num_sum(col) <= threshold and not mark_matrix[row * cols + col]:
+    def check(self, threshold, x, y):
+        """
+        判断当前格子下标的数值和是否大于阈值
+        :param threshold:
+        :param x:
+        :param y:
+        :return: bool
+        """
+        if self.get_num(x) + self.get_num(y) > threshold:
             return True
-        else:
-            return False
+        return False
 
-    def get_num_sum(self, num):
-        result = 0
-        while num:
-            result += num % 10
-            num = num // 10
-        return result
+    def movingCount(self, threshold, rows, cols):
+        res = 0
+        if threshold < 0 or rows <= 0 or cols <= 0:
+            return res
+        label_mat = [[0] * cols for _ in range(rows)]  # 初始化label矩阵，用来标记当前元素是否已访问
+        queue = [[0, 0]]  # 初始化BFS搜索队列，首先喂进去矩阵中的第一个元素
+        dx, dy = [1, -1, 0, 0], [0, 0, 1, -1]
+        while queue:
+            x, y = queue.pop(0)  # 弹出队列中的队首元素的坐标
+            # 检查当前元素是否已访问（因为搜索队列中某个元素可能被重复添加）or 矩阵下标大于阈值，为障碍物，不能移动！
+            if label_mat[x][y] == 1 or self.check(threshold, x, y):
+                continue
+            res += 1
+            label_mat[x][y] = 1  # 将矩阵中的当前元素标记为已访问
+            for i in range(4):
+                a = x + dx[i]
+                b = y + dy[i]
+                if 0 <= a < rows and 0 <= b < cols and label_mat[a][b] == 0:
+                    queue.append([a, b])
+        return res
 
 
 if __name__ == '__main__':
     sol = Solution()
-    print(sol.movingCount(10, 1, 100))
+    print(sol.movingCount(3, 13, 14))

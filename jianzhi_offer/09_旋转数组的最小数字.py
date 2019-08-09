@@ -12,41 +12,29 @@
 
 
 class Solution:
-    # 算法思路：
-    #       首先要做的，当然是找到数组中最小的元素，那么第一反应可能是用一遍顺序遍历，找到最小的元素，此时时间复杂度为O(n)
-    #       但是，我们原数组是一个递增排序，那么它任意一个点作为旋转之后，得到的数组，如果分成两部分，一定满足左部分的点>=右部分的点
-    #       并且这两部分的元素仍是递增排序的，而最小的元素，则刚好是两部分的分界线
-    #       因此尝试用二分查找来寻找最小的元素
-    # 伪代码：
-    #       排除异常情况
-    #       初始化三个指针，left指向数组头，right指向数组尾，mid初始化为0
-    #       当left指向的元素>=right指向的元素时：(根据旋转数组所得)
-    #           如果 right-left=1：
-    #               说明两个指针相邻了，right即为数组中的最小值，循环结束
-    #           计算left与right的中间元素mid(向下取整)
-    #           如果mid指向的元素>=left指向的元素：
-    #               说明left到mid之间处于递增关系，最小值在mid和right之间，于是把mid赋给left
-    #           否则:
-    #               由mid指向的元素<left指向的元素得知，最小值在left和mid之间,于是把mid赋给right
 
     def minNumberInRotateArray(self, rotateArray):
-        if len(rotateArray) == 0 or rotateArray is None:
-            return 0
-        left = 0
-        right = len(rotateArray) - 1
-        mid = left
-        while rotateArray[left] >= rotateArray[right]:
-            if right - left == 1:
-                mid = right
-                break
-            mid = (left + right) // 2  # 向下取余
-            if rotateArray[mid] >= rotateArray[left]:
-                left = mid
+        if len(rotateArray) == 0:
+            return -1
+        n = len(rotateArray) - 1
+        # 去重
+        while rotateArray[n] == rotateArray[0]:
+            n -= 1
+        # 如果剩下数组为递增序列，直接返回首元素
+        if rotateArray[n] >= rotateArray[0]:
+            return rotateArray[0]
+        # 否则使用二分查找法
+        l = 0
+        r = n
+        while l < r:
+            mid = (l + r) // 2
+            if rotateArray[mid] < rotateArray[0]:
+                r = mid
             else:
-                right = mid
-        return rotateArray[mid]
+                l = mid + 1
+        return rotateArray[l]
 
 
 if __name__ == '__main__':
     sol = Solution()
-    print(sol.minNumberInRotateArray([4, 5, 6, 7, 8, 1, 2, 3]))
+    print(sol.minNumberInRotateArray([4, 5, 6, 7, 8, 0, 1, 2]))

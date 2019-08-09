@@ -21,21 +21,39 @@ class Solution:
     #       定义两个指针slow，fast，fast指针先走k步
     #       fast走一步，slow走一步
     #       fast指向到终点后的下一个节点的位置时，此时slow指向节点，就是倒数第k个节点
-    def FindKthToTail(self, head, k):
-        if k == 0 or head is None:
+    def FindKthToTail(self, pListHead, k):
+        if not pListHead or k <= 0:
             return None
-        fast = slow = head
-        # 初始化fast节点的位置，往前移动k位，当k超过链表长度时，返回None
+        p = pListHead
+        q = pListHead
+        k = k - 1
         while k:
-            if fast is None:
+            if not q.next:
                 return None
-            fast = fast.next
+            q = q.next
             k -= 1
-        # fast抵达终点后的下一位置时，此时slow对应的即为倒数第k个节点
-        while fast:
-            fast = fast.next
-            slow = slow.next
-        return slow
+        while q.next:
+            q = q.next
+            p = p.next
+        return p
+
+    def findKthToTail_2(self, pListHead, k):
+        """
+        :type pListHead: ListNode
+        :type k: int
+        :rtype: ListNode
+        """
+        n = 0
+        p = pListHead
+        while p:
+            n += 1
+            p = p.next
+        if n == 0 or k <= 1 or k > n:
+            return None
+        p = pListHead
+        while k < n:
+            p = p.next
+            k += 1
 
 
 if __name__ == '__main__':

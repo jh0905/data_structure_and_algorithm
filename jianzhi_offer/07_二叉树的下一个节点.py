@@ -18,6 +18,23 @@ class TreeLinkNode:
 
 
 class Solution:
+    ########################## 分情况讨论 #############################
+    # 1.当前node存在右子树，那么它的下一个节点即为node->next
+    # 2.当前node不存在右子树，继续划分为两种情况：
+    #   2.1 当前node为father的左儿子，那么它的下一个节点即为 node->father
+    #   2.2 当前node为father的右儿子，那么它的下一个节点向上搜索：
+    #       2.2.1 如果node->father节点为左儿子，那么它的下一个节点为node->father->father
+    #       2.2.2 如果node->father节点为右儿子，继续向上搜索，停止条件为它为左儿子或者到达root节点
+    #################################################################
+
+    def getNext_1(self, pNode):
+        if pNode.right:
+            return pNode.right
+
+        while pNode.father and pNode.father.right == pNode:
+            pNode = pNode.father
+        return pNode
+
     # 算法思路：
     #       根据中序遍历的思想： 左节点 ->  根节点 -> 右节点
     #       (1)如果某个节点有右子树，那么它的下一个节点则为右子树中的最左子节点
@@ -25,7 +42,7 @@ class Solution:
     #           要返回的下一个节点则为该节点的父节点，如果找不到满足条件的节点，返回None
     #       (3)如果某个节点没有右子树，并且它是父节点的左节点，那么它的下一个节点则为父节点
     #       (4)如果某个节点没有右子树，并且它是父节点（没有右孩子节点），那么它的下一个节点为None  *** 这个情况很容易漏，要多注意
-    def GetNext(self, pNode):
+    def GetNext_2(self, pNode):
         if not pNode:
             return None
         elif pNode.right:  # 对应情况(1)

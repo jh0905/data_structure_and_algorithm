@@ -17,25 +17,35 @@ class TreeNode:
 
 
 class Solution:
-    # 返回构造的TreeNode根节点
+    preorder = []
+    inorder = []
 
-    # 算法思路：
-    #    前序遍历的第一个元素为根节点的值，中序遍历列表中，根节点的值在中间，左边的为左子树的所有节点，右边为右子树的所有节点
-    #    然后用递归的思路，重复上面的过程
-    #    如果 pre为空或者tin为空，返回None (排除异常情况)
-    #    否则：
-    #       root = pre[0]
-    #       pos = tin.index(pre[0])   # 根节点在中序列表的position
-    #       root.left = 递归调用(pre[1:pos+1],tin[:pos])
-    #       root.right = 递归调用(pre[pos+1:],tin[pos+1:])
-    #    递归结束，返回root
-    def reConstructBinaryTree(self, pre, tin):
-        if not pre or not tin:
-            return None
-        root = TreeNode(pre[0])
-        pos = tin.index(pre[0])
-        root.left = self.reConstructBinaryTree(pre[1:pos + 1], tin[:pos])
-        root.right = self.reConstructBinaryTree(pre[pos + 1:], tin[pos + 1:])
+    def buildTree(self, _preorder, _inorder):
+        """
+        :type preorder: List[int]
+        :type inorder: List[int] 
+        :rtype: TreeNode
+        """
+        self.preorder = _preorder
+        self.inorder = _inorder
+        return self.dfs(0, len(self.preorder) - 1, 0, len(self.inorder) - 1)
+
+    def dfs(self, pl, pr, il, ir):
+        """
+        数组范围是闭区间
+        pl:前序遍历左边界
+        pr:前序遍历右边界
+        il:中序遍历左边界
+        ir:中序遍历右边界
+        """
+        if pl > pr:
+            return
+        root = TreeNode(self.preorder[pl])
+        idx = self.inorder.index(self.preorder[pl])
+        left = self.dfs(pl + 1, pl + idx - il, il, idx - 1)
+        right = self.dfs(pl + idx - il + 1, pr, idx + 1, ir)
+        root.left = left
+        root.right = right
         return root
 
 
@@ -43,4 +53,4 @@ if __name__ == '__main__':
     sol = Solution()
     pre_list = [1, 2, 4, 7, 3, 5, 6, 8]
     tin_list = [4, 7, 2, 1, 5, 3, 8, 6]
-    print(sol.reConstructBinaryTree(pre_list, tin_list))
+    print(sol.buildTree(pre_list, tin_list))

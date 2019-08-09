@@ -15,57 +15,53 @@
 
 
 # -*- coding:utf-8 -*-
-class Solution:
-    # 算法思路：
-    # 这是一个典型的用回溯法来求解的问题：
-    # (1)具体步骤如下：
-    #   初始化一个长度为矩阵元素个数的零向量，初始path_index = 0
-    #   遍历矩阵中的每一个元素
-    #       执行havePathCore()操作
-    #       如果找到了一条符合要求的路径，返回True,否则继续矩阵中下一个元素的遍历
-    #   如果遍历完所有元素，都没有返回True，那么返回False
-
-    # (2)havePathCore()操作如下：
-    #   首先判断path_index是否等于path的长度，是的话，说明已经查找路径完毕，返回True,否的话，继续下去
-    #   初始bool变量have_path为False
-    #   判断条件是否成立，具体如下：
-    #       当前矩阵中的元素，所在的row和col是否没有越界；并且矩阵中的该元素是否对应路径中的元素；并且该元素还没有被访问过
-    #   条件成立的话，path_index加一，将当前元素标记为已访问，然后递归的往当前元素的四个方向进行搜索，调用hasPathCore()方法;
-    #   如果四个方向最终都返回了False的话，将当前元素标记为未访问，然后继续遍历矩阵中的下一个元素
-    def hasPath(self, matrix, rows, cols, path):
-        if not matrix or rows < 0 or cols < 0 or path is None:
+class Solution(object):
+    def hasPath(self, matrix, string):
+        """
+        :type matrix: List[List[str]]
+        :type string: str
+        :rtype: bool
+        """
+        if len(matrix) == 0 or len(matrix[0]) == 0 or len(string) == 0:
             return False
-        mark_matrix = [0] * cols * rows  # 构建一个零向量，用来标记矩阵中的每一个元素
-        path_index = 0  # 从路径中第一个元素开始查找
-        for row in range(rows):
-            for col in range(cols):
-                if self.hasPathCore(matrix, rows, cols, row, col, path, path_index, mark_matrix):
+        for row in range(len(matrix)):
+            for col in range(len(matrix[0])):
+                if self.dfs(matrix, string, 0, row, col):
                     return True
         return False
 
-    def hasPathCore(self, matrix, rows, cols, row, col, path, path_index, mark_matrix):
-        if path_index == len(path):  # 满足条件，则说明path上所有的元素已经查找完毕了
+    def dfs(self, matrix, path, path_idx, x, y):
+        """
+        :param matrix: 输入矩阵
+        :param path: 输入路径
+        :param path_idx: 待查找路径中的元素下标
+        :param x: 暴搜法的矩阵元素横坐标
+        :param y: 暴搜法的矩阵元素纵坐标
+        :return:
+        """
+        if matrix[x][y] != path[path_idx]:
+            return False
+        if path_idx == len(path) - 1:
             return True
-        has_path = False
-        if 0 <= row < rows and 0 <= col < cols and \
-                matrix[row * cols + col] == path[path_index] and not mark_matrix[row * cols + col]:
-            path_index += 1
-            mark_matrix[row * cols + col] = 1
-            # 把是否存在指定的路径，结果保存在has_path变量中
-            has_path = self.hasPathCore(matrix, rows, cols, row + 1, col, path, path_index, mark_matrix) \
-                       or self.hasPathCore(matrix, rows, cols, row - 1, col, path, path_index, mark_matrix) \
-                       or self.hasPathCore(matrix, rows, cols, row, col + 1, path, path_index, mark_matrix) \
-                       or self.hasPathCore(matrix, rows, cols, row, col - 1, path, path_index, mark_matrix)
-            if not has_path:
-                path_index -= 1
-                mark_matrix[row * cols + col] = 0
-        return has_path
+        temp = matrix[x][y]
+        matrix[x][y] = "*"  # 把矩阵中的元素设为不存在的元素，避免它被重复使用
+        dx = [-1, 1, 0, 0]
+        dy = [0, 0, 1, -1]
+        # 寻找上下左右四个方向，是否存在一个点为路径中的下一个元素
+        for i in range(4):
+            a = x + dx[i]
+            b = y + dy[i]
+            if 0 <= a < len(matrix) and 0 <= b < len(matrix[0]):
+                if self.dfs(matrix, path, path_idx + 1, a, b):
+                    return True
+        matrix[x][y] = temp  # 还原矩阵原始值
+        return False
 
 
 if __name__ == '__main__':
-    input_matrix = ['a', 'b', 'c', 'e',
-                    's', 'f', 'c', 's',
-                    'a', 'd', 'e', 'e']
+    input_matrix = [['b', 'b', 'c', 'e'],
+                    ['s', 'f', 'c', 's'],
+                    ['a', 'd', 'e', 'e']]
     input_path = ['b', 'c', 'c', 'e', 'd']
     sol = Solution()
-    print(sol.hasPath(input_matrix, 3, 4, input_path))
+    print(sol.hasPath(input_matrix, input_path))

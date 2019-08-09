@@ -28,15 +28,12 @@
 
 
 def straight_select_sort(nums):
-    length = len(nums)
-    idx = -1  # 初始化最小值对应的index，用于之后交换
-    for i in range(length):
-        min_value = nums[i]
-        for j in range(i, length):
-            if nums[j] < min_value:
-                min_value = nums[j]
-                idx = j
-        nums[i], nums[idx] = nums[idx], nums[i]
+    # i当前指针的位置，它之前的数组认为已经排好序了
+    for i in range(len(nums)):
+        # j 表示把指针i后面的数组中最小的数，跟i进行交换
+        for j in range(i + 1, len(nums)):
+            if nums[i] > nums[j]:
+                nums[i], nums[j] = nums[j], nums[i]
     return nums
 
 

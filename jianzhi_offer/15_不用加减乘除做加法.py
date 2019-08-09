@@ -40,19 +40,20 @@ class Solution:
     """
 
     def Add(self, num1, num2):
-        while num1:
-            temp = ((num1 & num2) << 1) & 0xffffffff  # 跟之前讲的一样，转变为正数，但是对应的32位的数不变
-            num2 = (num1 ^ num2) & 0xffffffff
-            num1 = temp
-        if num2 < 0x7fffffff:  # 如果小于这个值011...111（31个1），说明num2为正数，直接返回
-            return num2
+        while num2:
+            sum = (num1 ^ num2) & 0xffffffff  # 转为正数，但是对应的32位的数不变
+            carry = ((num1 & num2) << 1) & 0xffffffff
+            num1 = sum
+            num2 = carry
+        if num1 < 0x7fffffff:  # 如果小于这个值011...111（31个1），说明num2为正数，直接返回
+            return num1
         else:
             # 否则说明num2为负数，因为我们之前限定了边界（0xffffffff），转成了正值，所以要做处理，还原成原来的负数
             # num2为负数，32位之前的二进制位都为1，num2 ^ 0xffffffff截取后32位
             # 异或操作，相同为0，不同为1，这里把num2的后32位相当于全部按位取反，32位之前的同为0，仍然是0
             # 按位取反，把num2全部按位取反，也就还原了整个负数
             # 整个思路是一个32位取反，再所有位都取反的过程.
-            return ~(num2 ^ 0xffffffff)
+            return ~(num1 ^ 0xffffffff)
 
 
 if __name__ == '__main__':
