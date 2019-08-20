@@ -16,7 +16,6 @@ class Solution(object):
         :rtype: int
         """
         dp = [0] * (n + 1)
-        dp[1] = 0
         for i in range(1, n + 1):
             dp[i] = (dp[i - 1] + m) % i
         return dp[-1]
@@ -33,4 +32,4 @@ class Solution(object):
 
 
 if __name__ == '__main__':
-    print(Solution().lastRemaining_2(996, 20))
+    print(Solution().lastRemaining(996, 20))

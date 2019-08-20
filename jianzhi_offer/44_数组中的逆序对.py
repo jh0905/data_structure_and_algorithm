@@ -1,4 +1,4 @@
-# encoding: utf-8
+w  # encoding: utf-8
 """
  @project:data_structure_and_algorithm
  @author: Jiang Hui
@@ -40,12 +40,10 @@ class Solution(object):
                 # print('{} {}'.format(nums[i:mid+1],nums[j]))
                 j += 1
                 res += mid - i + 1  # 统计左边有多少个大于右边当前值的元素
-        while i <= mid:
-            sorted_nums.append(nums[i])
-            i += 1
-        while j <= r:
-            sorted_nums.append(nums[j])
-            j += 1
+        if i <= mid:
+            sorted_nums.extend(nums[i:mid + 1])
+        if j <= r:
+            sorted_nums.append(nums[j:r + 1])
         nums[l:r + 1] = sorted_nums  # 把进行归并所对应的原数组部分，用有序数组替代
         return res
 

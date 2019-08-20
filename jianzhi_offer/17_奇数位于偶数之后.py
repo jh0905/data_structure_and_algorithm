@@ -22,6 +22,17 @@ class Solution:
         return nums
 
 
+# 如果要保证拍完序之后，奇数，偶数的相对顺序不变，那么用下面解法
+class Solution2:
+    def reOrderArray(self, nums):
+        # 类似于冒泡排序，前偶后奇 则交换两个元素
+        for i in range(len(nums) - 1):
+            for j in range(len(nums) - 1 - i):
+                if nums[j] % 2 == 0 and nums[j + 1] % 2 == 1:
+                    nums[j], nums[j + 1] = nums[j + 1], nums[j]
+        return nums
+
+
 if __name__ == '__main__':
     array = [int(x) for x in input().split()]
     print(Solution().reorder_array(array))

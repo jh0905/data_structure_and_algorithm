@@ -31,7 +31,7 @@ class Solution:
 
 
 # 解法二：栈的思想
-class Solution:
+class Solution2:
     def printListFromTailToHead(self, listNode):
         stack = []
         result = []
@@ -45,6 +45,20 @@ class Solution:
         return result
 
 
+class Solution3:
+    # 返回从尾部到头部的列表值序列，例如[1,2,3]
+    res = []
+
+    def printListFromTailToHead(self, listNode):
+        self.res = []
+        if not listNode:
+            return
+        else:
+            self.printListFromTailToHead(listNode.next)
+            self.res.append(listNode.val)
+        return self.res
+
+
 if __name__ == '__main__':
     node_1 = ListNode(1)
     node_2 = ListNode(2)
@@ -56,7 +70,7 @@ if __name__ == '__main__':
     node_3.next = node_4
     node_4.next = node_5
     node_5.next = None
-    sol = Solution()
+    sol = Solution3()
     print(sol.printListFromTailToHead(node_1))
     print(sol.printListFromTailToHead(node_2))
     print(sol.printListFromTailToHead(node_3))

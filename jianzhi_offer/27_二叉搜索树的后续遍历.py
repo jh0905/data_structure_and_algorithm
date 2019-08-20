@@ -37,5 +37,5 @@ class Solution:
 
 
 if __name__ == '__main__':
-    sequence = [4, 8, 6, 12, 16, 14, 10]
+    sequence = [7, 4, 6, 5]
     print(Solution().verifySequenceOfBST(sequence))

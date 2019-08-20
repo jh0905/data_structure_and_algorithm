@@ -20,8 +20,8 @@ class Solution:
         if not nums:
             return self.res
         self.path = [None] * len(nums)
-        sorted(nums)  # 排完序，保证重复的元素相邻
-        self.dfs(nums, 0, 0, 0)
+        # 排完序，保证重复的元素相邻
+        self.dfs(sorted(nums), 0, 0, 0)
         return self.res
 
     def dfs(self, nums, idx, start, state):
@@ -40,9 +40,9 @@ class Solution:
         for i in range(start, len(nums)):
             if not state >> i & 1:  # 从右往左，第i个位置第值是否为1，从i=0开始
                 self.path[i] = nums[idx]
-                self.dfs(nums, idx + 1, i + 1, state + (1 << i))
+                self.dfs(nums, idx + 1, i + 1, state + (1 << i))  # 运算优先级！
 
 
 if __name__ == '__main__':
-    nums = [1, 2, 2]
-    print(Solution().permutation(nums))
+    input_nums = ['a', 'b', 'c']
+    print(Solution().permutation(input_nums))

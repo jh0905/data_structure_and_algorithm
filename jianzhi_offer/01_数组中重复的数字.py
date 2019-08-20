@@ -1,4 +1,4 @@
-# encoding: utf-8
+n# encoding: utf-8
 """
  @project:剑指offer_by_Python
  @author: Jiang Hui

@@ -15,9 +15,8 @@ class Solution(object):
         :rtype: void
         """
         if not root:
-            return
-        temp = root.left
-        root.left = root.right
-        root.right = temp
+            return root
+        root.left, root.right = root.right, root.left
         self.mirror(root.left)
         self.mirror(root.right)
+        return root

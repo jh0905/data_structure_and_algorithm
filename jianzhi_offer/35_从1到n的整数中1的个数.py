@@ -35,7 +35,7 @@ class Solution(object):
             if nums[i] > 1:
                 res += 10 ** t
             elif nums[i] == 1:
-                res += right + 1
+                res += right + 1  # 记得加1
         return res
 
 

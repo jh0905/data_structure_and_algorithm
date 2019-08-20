@@ -28,3 +28,6 @@ class Solution(object):
             if num >> k & 1 == 1:
                 x ^= num
         return [x, s ^ x]
+
+
+

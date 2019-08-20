@@ -42,10 +42,10 @@ class Solution:
     def Add(self, num1, num2):
         while num2:
             sum = (num1 ^ num2) & 0xffffffff  # 转为正数，但是对应的32位的数不变
-            carry = ((num1 & num2) << 1) & 0xffffffff
+            carry = (num1 & num2) & 0xffffffff
             num1 = sum
-            num2 = carry
-        if num1 < 0x7fffffff:  # 如果小于这个值011...111（31个1），说明num2为正数，直接返回
+            num2 = carry << 1
+        if not num1 << 31 & 1:  # 如果小于这个值011...111（31个1），说明num2为正数，直接返回
             return num1
         else:
             # 否则说明num2为负数，因为我们之前限定了边界（0xffffffff），转成了正值，所以要做处理，还原成原来的负数

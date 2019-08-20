@@ -47,7 +47,7 @@ class Solution:
             for i in range(4):
                 a = x + dx[i]
                 b = y + dy[i]
-                if 0 <= a < rows and 0 <= b < cols and label_mat[a][b] == 0:
+                if 0 <= a < rows and 0 <= b < cols and not label_mat[a][b]:
                     queue.append([a, b])
         return res
 

@@ -1,13 +1,4 @@
-# encoding: utf-8
-"""
- @project:data_structure_and_algorithm
- @author: Jiang Hui
- @language:Python 3.7.2 [GCC 7.3.0] :: Anaconda, Inc. on linux
- @time: 2019/8/5 10:24
- @desc:
-"""
-
-
+# Definition for singly-linked list with a random pointer.
 class ListNode(object):
     def __init__(self, x):
         self.val = x
@@ -43,5 +34,6 @@ class Solution(object):
         while p:
             cur.next = p.next
             cur = cur.next
-            p = p.next.next  # 跨节点移动
+            p.next = p.next.next
+            p = p.next
         return dummy.next

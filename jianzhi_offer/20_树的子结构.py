@@ -28,3 +28,4 @@ class Solution(object):
             return True
         else:
             return self.hasSubtree(pRoot1.left, pRoot2) or self.hasSubtree(pRoot1.right, pRoot2)
+

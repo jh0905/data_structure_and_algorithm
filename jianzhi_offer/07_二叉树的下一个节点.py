@@ -29,11 +29,13 @@ class Solution:
 
     def getNext_1(self, pNode):
         if pNode.right:
-            return pNode.right
-
-        while pNode.father and pNode.father.right == pNode:
-            pNode = pNode.father
-        return pNode
+            p = pNode.right
+            while p.left:
+                p = p.left
+            return p
+        while pNode.next and pNode.next.right == pNode:
+            pNode = pNode.next
+        return pNode.next
 
     # 算法思路：
     #       根据中序遍历的思想： 左节点 ->  根节点 -> 右节点
@@ -50,8 +52,8 @@ class Solution:
             while pNode.left:
                 pNode = pNode.left
             return pNode
-        elif pNode.next is not None and pNode.next.right == pNode:  # 对应情况(2)
-            while pNode.next is not None and pNode.next.left != pNode:
+        elif pNode.next and pNode.next.right == pNode:  # 对应情况(2)
+            while pNode.next and pNode.next.left != pNode:
                 pNode = pNode.next
             return pNode.next
         else:  # 对应情况(3)(4)

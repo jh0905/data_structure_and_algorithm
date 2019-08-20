@@ -24,5 +24,9 @@ class Solution:
                 d[ch] = 1
         d = sorted(d.items(), key=lambda item: item[1])
         if d[0][1] == 1:
-            return d[0][0]
+            return s.index(d[0][0])
         return '#'
+
+
+if __name__ == '__main__':
+    print(Solution().firstNotRepeatingChar('NXWtnzyoHoBhUJaPauJaAitLWNMlkKwDYbbigdMMaYfkVPhGZcrEwp'))
