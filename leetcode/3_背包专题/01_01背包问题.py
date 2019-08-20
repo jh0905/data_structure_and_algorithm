@@ -48,13 +48,10 @@ class Solution:
         dp = [[0] * (m + 1) for _ in range(n + 1)]
         for i in range(1, n + 1):
             for j in range(m + 1):
+                dp[i][j] = dp[i - 1][j]
                 if j >= v[i]:
-                    dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - v[i]] + w[i])
-        res = 0
-        for i in range(m + 1):
-            res = max(res, dp[-1][i])
-        print(dp)
-        return res
+                    dp[i][j] = max(dp[i][j], dp[i - 1][j - v[i]] + w[i])
+        return dp[n][m]  # 最大值为前n件物品，总容量为m时的状态值。
 
 
 if __name__ == '__main__':
