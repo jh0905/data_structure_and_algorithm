@@ -19,7 +19,7 @@ class Solution(object):
         while i < len(s):
             # 字符串划分模板
             j = i
-            while j < len(s) and s[j] != ' ':
+            while j < len(s) and s[j] != ' ':  # 模板
                 j += 1
             s = s.replace(s[i:j], s[i:j][::-1])  # 将单词进行翻转，并覆盖原单词
             i = j + 1
