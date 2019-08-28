@@ -2,7 +2,7 @@
 数据结构与算法进行整理
 
 ## 本项目暂时主要分为五大模块：
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第一模块是剑指offer系列的实现代码；
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第一模块是剑指offer系列的实现代码；（建议对照[笔记](https://blog.csdn.net/jh1137921986/article/details/94839522)来阅读此部分代码）
   
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第二模块是LeetCode专题系列的实现代码；
 
