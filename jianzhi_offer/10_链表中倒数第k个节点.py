@@ -37,24 +37,6 @@ class Solution:
             p = p.next
         return p
 
-    def findKthToTail_2(self, pListHead, k):
-        """
-        :type pListHead: ListNode
-        :type k: int
-        :rtype: ListNode
-        """
-        n = 0
-        p = pListHead
-        while p:
-            n += 1
-            p = p.next
-        if n == 0 or k <= 1 or k > n:
-            return None
-        p = pListHead
-        while k < n:
-            p = p.next
-            k += 1
-
 
 if __name__ == '__main__':
     node_1 = ListNode(1)
@@ -66,6 +48,5 @@ if __name__ == '__main__':
     node_2.next = node_3
     node_3.next = node_4
     node_4.next = node_5
-    node_5.next = None
     sol = Solution()
     print(sol.FindKthToTail(node_1, 1).val)

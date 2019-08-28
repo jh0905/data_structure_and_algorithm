@@ -14,7 +14,7 @@
 class Solution:
 
     def minNumberInRotateArray(self, rotateArray):
-        if len(rotateArray) == 0:
+        if not rotateArray:
             return -1
         n = len(rotateArray) - 1
         # 去重

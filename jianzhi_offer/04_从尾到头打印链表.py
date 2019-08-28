@@ -15,40 +15,11 @@ class ListNode:
         self.next = None
 
 
-# 解法一：递归的思想     "造化钟神秀"版本
 class Solution:
-    # 返回从尾部到头部的列表值序列，例如[1,2,3]
-    result = list()
-
-    def printListFromTailToHead(self, listNode):
-        # 相当于Python3的self.result.clear(), 在Python2中没有clear，故用del方法
-        # 这里删除的目的是在下一个测试用例传进来时，清空上一个测试用例的输出结果
-        del self.result[:]
-        if listNode is not None:
-            self.printListFromTailToHead(listNode.next)
-            self.result.append(listNode.val)
-        return self.result
-
-
-# 解法二：栈的思想
-class Solution2:
-    def printListFromTailToHead(self, listNode):
-        stack = []
-        result = []
-        if listNode is None:
-            return []
-        while listNode:
-            stack.append(listNode.val)
-            listNode = listNode.next
-        while stack:
-            result.append(stack.pop())
-        return result
-
-
-class Solution3:
     # 返回从尾部到头部的列表值序列，例如[1,2,3]
     res = []
 
+    # 递归的思想
     def printListFromTailToHead(self, listNode):
         self.res = []
         if not listNode:
@@ -70,7 +41,5 @@ if __name__ == '__main__':
     node_3.next = node_4
     node_4.next = node_5
     node_5.next = None
-    sol = Solution3()
+    sol = Solution()
     print(sol.printListFromTailToHead(node_1))
-    print(sol.printListFromTailToHead(node_2))
-    print(sol.printListFromTailToHead(node_3))

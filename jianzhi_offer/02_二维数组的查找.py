@@ -10,13 +10,11 @@
 
 
 class Solution:
-    # array 二维列表
     def Find(self, target, array):
         n_rows = len(array)
         n_columns = len(array[0])
         i = n_rows - 1
         j = 0
-        # 这里判断条件做错了无数次，记住i>=0，j<n_columns,细心，细心，做了几遍还是在细节上出错!
         while i >= 0 and j < n_columns:
             if array[i][j] == target:
                 return True

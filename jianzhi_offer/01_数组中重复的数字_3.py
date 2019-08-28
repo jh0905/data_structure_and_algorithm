@@ -12,21 +12,21 @@
 class Solution:
     def findDuplicates(self, nums):
         """
-        正负存储元素法，遍历nums,将nums[i]的绝对值作为下标，如果对应元素为正，则转为负数，否则添加到result里面
+        正负存储元素法，遍历nums,将nums[i]的绝对值作为下标，如果对应元素为正，则转为负数，否则添加到res里面
         :param nums:
         :return:
         """
-        if nums is None or len(nums)==0:
+        if not nums:
             return []
-        result=[]
+        res = []
         nums[nums[0]] *= -1
-        for i in range(1,len(nums)):
+        for i in range(1, len(nums)):
             num = abs(nums[i])
-            if nums[num-1] > 0:
-                nums[num-1] = nums[num-1]*(-1)
+            if nums[num - 1] > 0:
+                nums[num - 1] = nums[num - 1] * (-1)
             else:
-                result.append(num)
-        return result
+                res.append(num)
+        return res
 
 
 if __name__ == '__main__':
