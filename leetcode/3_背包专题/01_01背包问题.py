@@ -4,7 +4,7 @@
  @author: Jiang Hui
  @language:Python 3.7.2 [GCC 7.3.0] :: Anaconda, Inc. on linux
  @time: 2019/8/19 15:40
- @desc: acwing 第2题
+ @desc: acwing第2题
 
         有 N 件物品和一个容量是 V 的背包。每件物品只能使用一次。（只能使用一次，所以称作01背包问题）
 
