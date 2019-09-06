@@ -28,16 +28,16 @@
 
 
 def bubble_sort(nums):
-    # 假设有n个数，那么冒泡n-1轮
-    # 每一轮交换的次数少一，第一轮为比较n-1次，第二轮比较n-2次...
-    for i in range(len(nums) - 1):
-        flag = False  # 冒泡排序的优化，如果某一轮中，未发生数值交换，说明已经有序。
-        for j in range(len(nums) - 1 - i):
+    n = len(nums)
+    for i in range(n - 1, -1, -1):  # 冒泡n-1轮
+        flag = True
+        for j in range(i):  # 每轮枚举从第0个元素，到第i-1个元素
             if nums[j] > nums[j + 1]:
                 nums[j], nums[j + 1] = nums[j + 1], nums[j]
-                flag = True
-        if not flag:
-            return nums
+                flag = False
+        if flag:  # 如果flag为True，如果本轮的冒泡未发生元素交换，则数组已经有序
+            break
+    return nums
 
 
 if __name__ == '__main__':

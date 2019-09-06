@@ -20,10 +20,19 @@
 
 """
  1.基本思想：
-    初始时把要排序的n个数的序列看作是一棵顺序存储的二叉树（一维数组存储二叉树），调整它们的存储序，使之成为一个堆，将堆顶元素输出，
- 得到n个元素中最小(或最大)的元素，这时堆的根节点的值最小（或者最大）
-    然后对前面(n-1)个元素重新调整使之成为堆，输出堆顶元素，得到n 个元素中次小(或次大)的元素。
-    依此类推，直到只有两个节点的堆，并对它们作交换，最后得到有n个节点的有序序列。称这个过程为堆排序。
+    堆是一棵完全二叉树！
+        每个节点的值大于或等于左右孩子节点的值，称为大根堆，heap[i] >= heap[2i], heap[i] >= heap[2i+1]
+        每个节点的值小于或等于左右孩子节点的值，称为小根堆，heap[i] <= heap[2i], heap[i] <= heap[2i+1]
+    
+    堆排序：（使用大根堆）
+        每次弹出堆顶元素，将它与数组尾部元素进行交换，那么数组右边部分将保持有序，前面部分是无序；
+        然后用前面的n-1个元素，重新建立一个大根堆，重复上过程，将堆顶元素与此时数组的倒数第二个元素交换
+        
+        以此类推，直至堆中只剩下一个元素，此时数组有序。
+        
+    堆排序的难点在于：
+        如何将一个无序序列建立成一个堆？
+        如何在输出堆顶元素之后，调整剩余元素成为一个新的最大堆？
 
  2.时间复杂度：
     一般来说，对于树形的数据结构，时间复杂度为O(n*log n)
@@ -35,30 +44,30 @@
 """
 
 
-# 构建堆序列
-def heapify(unsorted, index, heap_size):
-    largest = index
-    left_index = 2 * index + 1
-    right_index = 2 * index + 2
-    if left_index < heap_size and unsorted[left_index] > unsorted[largest]:
-        largest = left_index
+# 第一步，将无序序列，构建成堆序列
+def heapify(nums, idx, heap_size):
+    heap_top = idx  # 找到堆顶元素、左儿子、右儿子三个值的最大值对应的下标，赋给heap_top、
+    l_idx = 2 * idx + 1  # 堆顶元素的左儿子
+    r_idx = 2 * idx + 2  # 堆顶元素的右儿子
+    if l_idx < heap_size and nums[l_idx] > nums[heap_top]:  # 左儿子的值大于堆顶元素
+        heap_top = l_idx  # 将左儿子的下标作为堆顶元素的下标
 
-    if right_index < heap_size and unsorted[right_index] > unsorted[largest]:
-        largest = right_index
+    if r_idx < heap_size and nums[r_idx] > nums[heap_top]:  # 右儿子的值大于堆顶元素
+        heap_top = r_idx  # 将右儿子的下标作为堆顶元素的下标
 
-    if largest != index:
-        unsorted[largest], unsorted[index] = unsorted[index], unsorted[largest]
-        heapify(unsorted, largest, heap_size)
+    if heap_top != idx:  # 如果不相等，说明需要进行元素交换，最终得到 堆顶元素>=左儿子和右儿子
+        nums[heap_top], nums[idx] = nums[idx], nums[heap_top]
+        heapify(nums, heap_top, heap_size)  # 继续调整堆顶元素后面左右儿子，使其满足大根堆
 
 
-def heap_sort(unsorted):
-    n = len(unsorted)
-    for i in range(n // 2 - 1, -1, -1):
-        heapify(unsorted, i, n)
-    for i in range(n - 1, 0, -1):
-        unsorted[0], unsorted[i] = unsorted[i], unsorted[0]
-        heapify(unsorted, 0, i)
-    return unsorted
+def heap_sort(nums):
+    n = len(nums)
+    for i in range(n // 2 - 1, -1, -1):  # 第一步：从下往上，将最大值往上传，构建大顶堆
+        heapify(nums, i, n)
+    for i in range(n - 1, 0, -1):  # 第二步：将剩余序列重新构造出大定堆，0~n-1、0～n-2、... 、 0～2、 0～1
+        nums[0], nums[i] = nums[i], nums[0]  # 堆顶元素与序列无序部分的最后一个元素交换
+        heapify(nums, 0, i)  # 堆的长度减小1
+    return nums
 
 
 if __name__ == '__main__':

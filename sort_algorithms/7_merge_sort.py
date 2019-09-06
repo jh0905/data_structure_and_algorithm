@@ -19,64 +19,25 @@
 """
 
 
-def merge_sort(nums):
-    length = len(nums)
-    if length > 1:
-        midpoint = length // 2
-        left_half = merge_sort(nums[:midpoint])
-        right_half = merge_sort(nums[midpoint:])
-        i = 0
-        j = 0
-        k = 0
-        left_length = len(left_half)
-        right_length = len(right_half)
-        while i < left_length and j < right_length:
-            if left_half[i] < right_half[j]:
-                nums[k] = left_half[i]
-                i += 1
-            else:
-                nums[k] = right_half[j]
-                j += 1
-            k += 1
-
-        while i < left_length:
-            nums[k] = left_half[i]
-            i += 1
-            k += 1
-
-        while j < right_length:
-            nums[k] = right_half[j]
-            j += 1
-            k += 1
-
-    return nums
-
-
-'''
-Python implementation of merge sort algorithm.
-Takes an average of 0.6 microseconds to sort a list of length 1000 items.
-Best Case Scenario : O(n)
-Worst Case Scenario : O(n)
-'''
-
-
-def merge_sort_fastest(nums):
-    start = []
-    end = []
-    while len(nums) > 1:
-        a = min(nums)
-        b = max(nums)
-        start.append(a)
-        end.append(b)
-        nums.remove(a)
-        nums.remove(b)
-    if nums:
-        start.append(nums[0])
-    end.reverse()
-    return start + end
+def merge_sort(nums, l, r):
+    if l >= r:
+        return [nums[l]]
+    mid = l + r >> 1
+    left = merge_sort(nums, l, mid)
+    right = merge_sort(nums, mid + 1, r)
+    sorted_nums = []
+    while left and right:
+        if left[0] <= right[0]:
+            sorted_nums.append(left.pop(0))
+        else:
+            sorted_nums.append(right.pop(0))
+    if left:
+        sorted_nums.extend(left)
+    if right:
+        sorted_nums.extend(right)
+    return sorted_nums
 
 
 if __name__ == "__main__":
     numbers = [int(x) for x in input().split()]
-    print(merge_sort(numbers))
-    print(merge_sort_fastest(numbers))
+    print(merge_sort(numbers, 0, len(numbers) - 1))

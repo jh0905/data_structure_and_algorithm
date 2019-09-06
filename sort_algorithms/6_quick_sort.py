@@ -21,40 +21,27 @@
 """
 
 
-def quick_sort(nums):
-    length = len(nums)
-    if length <= 1:
-        return nums
-    else:
-        pivot = nums[0]
-        greater = [element for element in nums[1:] if element > pivot]
-        lesser = [element for element in nums[1:] if element <= pivot]
-        return quick_sort(lesser) + [pivot] + quick_sort(greater)
+def partition(nums, l, r):
+    pivot = nums[l]
+    while l < r:
+        while l < r and nums[r] >= pivot:
+            r -= 1
+        nums[l], nums[r] = nums[r], nums[l]
+        while l < r and nums[l] <= pivot:
+            l += 1
+        nums[l], nums[r] = nums[r], nums[l]
+    return l
 
 
-# 经典的快排算法
-def quick_sort_2(sorting, left, right):
-    if right <= left:
+def quick_sort(nums, l, r):
+    if l >= r:  # 如果数组为[4, 3]，partition返回的值则为1，右边变成l=2,r=1，所以此种情况要return，这里取大于等于号
         return
-    a = i = left
-    b = right
-    pivot = sorting[left]
-    while i <= b:
-        if sorting[i] < pivot:
-            sorting[a], sorting[i] = sorting[i], sorting[a]
-            a += 1
-            i += 1
-        elif sorting[i] > pivot:
-            sorting[b], sorting[i] = sorting[i], sorting[b]
-            b -= 1
-        else:
-            i += 1
-    quick_sort_2(sorting, left, a - 1)
-    quick_sort_2(sorting, b + 1, right)
+    idx = partition(nums, l, r)
+    quick_sort(nums, l, idx - 1)
+    quick_sort(nums, idx + 1, r)
 
 
 if __name__ == '__main__':
     numbers = [int(x) for x in input().split()]
-    print(quick_sort(numbers))
-    quick_sort_2(numbers, 0, len(numbers) - 1)
+    quick_sort(numbers, 0, len(numbers) - 1)
     print(numbers)
