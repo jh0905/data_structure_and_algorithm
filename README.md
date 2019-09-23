@@ -2,12 +2,21 @@
 数据结构与算法进行整理
 
 ## 本项目暂时主要分为五大模块：
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第一模块是剑指offer系列的实现代码；（建议对照[笔记](https://blog.csdn.net/jh1137921986/article/details/94839522)来阅读此部分代码）
+### 第一模块是剑指offer系列的实现代码；（建议对照[笔记](https://blog.csdn.net/jh1137921986/article/details/94839522)来阅读此部分代码）
   
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第二模块是LeetCode专题系列的实现代码；
-
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第三模块是公司笔试或经典算法题的实现代码；
+### 第二模块是LeetCode专题系列的实现代码；
+####  &emsp;&emsp; (1) 二分专题
+ #### &emsp;&emsp; (2) 链表专题
+ #### &emsp;&emsp; (3) 背包专题
+ #### &emsp;&emsp; (4) 二叉树专题
+ #### &emsp;&emsp; (5) 字符串专题
+ #### &emsp;&emsp; (6) 深搜&回溯专题
+ #### &emsp;&emsp; (7) 双指针&滑动窗口&单调栈&单调队列专题
+ #### &emsp;&emsp; (8) 哈希表&并查集&堆专题
+ #### &emsp;&emsp; (9) 动态规划专题
+ 
+### 第三模块是公司笔试或经典算法题的实现代码；
   
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第四模块是常见的六大查找算法；
+### 第四模块是常见的六大查找算法；
   
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第五模块是常见的八大排序算法
+### 第五模块是常见的八大排序算法
